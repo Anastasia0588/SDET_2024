@@ -1,6 +1,5 @@
 import random
 import string
-from faker import Faker
 
 
 def generate_random_string(length):
@@ -16,9 +15,3 @@ def generate_mobile_number():
 def random_year_of_birth():
     return random.randint(1900, 2024)
 
-
-def generate_address():
-    fake = Faker("ru_Ru")
-    address = fake.address()
-    print(address)
-    return address
