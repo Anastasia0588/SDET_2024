@@ -23,8 +23,10 @@ class RegistrationPageLocators:
     SUBJECTS = By.ID, 'subjectsInput'
     # поле Current Address
     CURRENT_ADDRESS = By.ID, 'currentAddress'
-    # кнопка загрузки файла
-    CHOOSE_FILE_BTN = By.ID, 'uploadPicture'
+    # поле загрузки файла
+    INPUT_FILE = By.ID, 'uploadPicture'
+    # кнопка Submit
+    SUBMIT_BTN = By.ID, 'submit'
 
 
 
