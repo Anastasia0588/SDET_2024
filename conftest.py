@@ -1,10 +1,11 @@
 import allure
 import pytest
+from faker import Faker
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
 import links
-from helper import generate_random_string, generate_mobile_number
+from helper import generate_mobile_number
 
 
 @pytest.fixture(scope='function')
@@ -27,8 +28,11 @@ def driver(request):
 @allure.title('Генерация данных пользователя')
 @pytest.fixture(scope='function')
 def user():
-    user = {'first_name': generate_random_string(10),
-            'last_name': generate_random_string(12),
-            'email': generate_random_string(10) + '@example.com',
-            'mobile': generate_mobile_number()}
+    user = {}
+    fake = Faker("ru_Ru")
+    user['address'] = fake.address()
+    user['first_name'] = fake.first_name()
+    user['last_name'] = fake.last_name()
+    user['email'] = fake.email(domain='example.com')
+    user['mobile'] = generate_mobile_number()
     return user
