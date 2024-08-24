@@ -45,8 +45,16 @@ class RegistrationPage(BasePage):
         address = generate_address()
         self.fill_text_field(RegistrationPageLocators.CURRENT_ADDRESS, address)
 
-    def upload_file(self, file_path):
-        self.click_on_element(RegistrationPageLocators.CHOOSE_FILE_BTN)
-        self.choose_file(file_path)
+    def upload_image(self, file):
+        input_file = self.find_element_with_wait(RegistrationPageLocators.INPUT_FILE)
+        self.upload_file(input_file, file)
+
+    def press_submit_button(self):
+        self.scroll_to_bottom_page()
+        self.click_on_element(RegistrationPageLocators.SUBMIT_BTN)
+
+
+
+
 
 
