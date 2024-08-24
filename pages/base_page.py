@@ -1,4 +1,6 @@
-import autoit
+import os
+
+import allure
 from selenium.webdriver import ActionChains
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
@@ -23,12 +25,16 @@ class BasePage:
         WebDriverWait(self.driver, 50).until(expected_conditions.element_to_be_clickable(locator))
         self.driver.find_element(*locator).click()
 
-    def scroll_to_element_and_click(self, locator):
-        element = self.driver.find_element(locator)
+    def scroll_to_element(self, locator):
+        element = self.find_element_with_wait(locator)
         actions = ActionChains(self.driver)
         actions.move_to_element(element)
-        actions.click(element)
         actions.perform()
+
+
+    @allure.step('Прокручиваем страницу до низа')
+    def scroll_to_bottom_page(self):
+        self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
 
     def select_any_element(self, locator, num):
         method, one_element_locator = locator
@@ -37,9 +43,14 @@ class BasePage:
         element = self.find_element_with_wait(locator)
         element.click()
 
-    def choose_file(self, file_path, window_title="Open"):
-        autoit.win_wait_active(window_title, 5)
-        autoit.control_send(window_title, "Edit1", file_path, 0)
-        autoit.control_click(window_title, "Button1", 0)
+    def upload_file(self, element, file):
+        current_dir = os.path.abspath(os.path.dirname(__file__))  # получаем путь к директории текущего исполняемого файла
+        file_path = current_dir.replace('pages', file)  # добавляем к этому пути имя файла
+        print(file_path)
+        element.send_keys(file_path)
+
+    def get_element_text(self, locator):
+        element = WebDriverWait(self.driver, 10).until(expected_conditions.presence_of_element_located(locator))
+        return element.text
 
 
