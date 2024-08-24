@@ -12,7 +12,7 @@ from helper import generate_random_string, generate_mobile_number
 def driver(request):
     options = Options()
     options.add_argument("--disable-extensions")
-    options.add_argument("--window-size=1600,900")
+    options.add_argument("--window-size=1920,1080")
     options.add_argument("--page_load_timeout=10")
     driver = webdriver.Chrome(options=options)
     try:
