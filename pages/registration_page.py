@@ -1,5 +1,8 @@
+import random
+
 import allure
 
+from helper import random_year_of_birth, generate_random_string, generate_address
 from locators.registration_locators import RegistrationPageLocators
 from pages.base_page import BasePage
 
@@ -15,11 +18,35 @@ class RegistrationPage(BasePage):
     def fill_last_field(self, last_name):
         self.fill_text_field(RegistrationPageLocators.LAST_NAME, last_name)
 
+    def fill_email_field(self, email):
+        self.fill_text_field(RegistrationPageLocators.EMAIL, email)
+
+    def fill_mobile_field(self, mobile):
+        self.fill_text_field(RegistrationPageLocators.MOBILE, mobile)
+
     def select_any_gender(self):
-        self.select_any_element(RegistrationPageLocators.GENDER)
+        self.select_any_element(RegistrationPageLocators.GENDERS, random.randint(1, 3))
 
     def select_birth_date(self):
         self.click_on_element(RegistrationPageLocators.DATE_FIELD)
-        self.select_any_data()
+        self.click_on_element(RegistrationPageLocators.YEAR_DROPDOWN)
+        self.select_year(RegistrationPageLocators.YEAR)
+
+    def select_year(self, locator):
+        method, year_locator = locator
+        year_locator = year_locator.format(random_year_of_birth())
+        locator = (method, year_locator)
+        self.scroll_to_element_and_click(locator)
+
+    def fill_subject_field(self):
+        self.fill_text_field(RegistrationPageLocators.SUBJECTS, generate_random_string(50))
+
+    def fill_current_address_field(self):
+        address = generate_address()
+        self.fill_text_field(RegistrationPageLocators.CURRENT_ADDRESS, address)
+
+    def upload_file(self, file_path):
+        self.click_on_element(RegistrationPageLocators.CHOOSE_FILE_BTN)
+        self.choose_file(file_path)
 
 

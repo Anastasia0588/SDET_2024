@@ -10,8 +10,21 @@ class RegistrationPageLocators:
     LAST_NAME = By.ID, 'lastName'
     # поле email
     EMAIL = By.ID, 'userEmail'
+    # поле Mobile
+    MOBILE = By.ID, 'userNumber'
     # радиобаттон Gender
-    GENDER = By.ID, 'gender-radio-{}'
+    GENDERS = By.XPATH, './/input[@id="gender-radio-{}"]/following-sibling::label' # gender-radio-{}
     # поле Date of Birth
     DATE_FIELD = By.ID, 'dateOfBirthInput'
+    # календарь
+    YEAR_DROPDOWN = By.XPATH, '//div[@id="dateOfBirth"]//select[contains(@class, "react-datepicker__year-select")]'
+    YEAR = By.XPATH, '//div[@id="dateOfBirth"]//options[@value="{}"]'
+    # поле Subjects
+    SUBJECTS = By.ID, 'subjectsInput'
+    # поле Current Address
+    CURRENT_ADDRESS = By.ID, 'currentAddress'
+    # кнопка загрузки файла
+    CHOOSE_FILE_BTN = By.ID, 'uploadPicture'
+
+
 

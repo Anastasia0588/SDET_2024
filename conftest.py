@@ -1,18 +1,25 @@
 import allure
 import pytest
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 
 import links
-from helper import generate_random_string
+from helper import generate_random_string, generate_mobile_number
 
 
 @pytest.fixture(scope='function')
 @allure.title('Запуск драйвера')
 def driver(request):
-    chrome_options = webdriver.ChromeOptions()
-    chrome_options.add_argument('--window-size=1920x1080')
-    driver = webdriver.Chrome()
-    driver.get(links.MAIN_PAGE)
+    options = Options()
+    options.add_argument("--disable-extensions")
+    options.add_argument("--window-size=1600,900")
+    options.add_argument("--page_load_timeout=10")
+    driver = webdriver.Chrome(options=options)
+    try:
+        driver.set_page_load_timeout(3)
+        driver.get(links.MAIN_PAGE)
+    except Exception:
+        print('Страница грузится дольше 3 сек')
     yield driver
     driver.quit()
 
@@ -22,6 +29,6 @@ def driver(request):
 def user():
     user = {'first_name': generate_random_string(10),
             'last_name': generate_random_string(12),
-            'email': generate_random_string(10) + '@example.com'}
-
+            'email': generate_random_string(10) + '@example.com',
+            'mobile': generate_mobile_number()}
     return user
