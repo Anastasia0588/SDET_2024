@@ -14,7 +14,7 @@ class BasePage:
         WebDriverWait(self.driver, 60).until(expected_conditions.visibility_of_element_located(locator))
 
     def find_element_with_wait(self, locator):
-        WebDriverWait(self.driver, 5).until(expected_conditions.visibility_of_element_located(locator))
+        WebDriverWait(self.driver, 10).until(expected_conditions.visibility_of_element_located(locator))
         return self.driver.find_element(*locator)
 
     def fill_text_field(self, locator, text):
@@ -31,7 +31,6 @@ class BasePage:
         actions.move_to_element(element)
         actions.perform()
 
-
     @allure.step('Прокручиваем страницу до низа')
     def scroll_to_bottom_page(self):
         self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
@@ -44,8 +43,8 @@ class BasePage:
         element.click()
 
     def upload_file(self, element, file):
-        current_dir = os.path.abspath(os.path.dirname(__file__))  # получаем путь к директории текущего исполняемого файла
-        file_path = current_dir.replace('pages', file)  # добавляем к этому пути имя файла
+        current_dir = os.path.abspath(os.path.dirname(__file__))
+        file_path = current_dir.replace('pages', file)
         print(file_path)
         element.send_keys(file_path)
 
@@ -53,4 +52,7 @@ class BasePage:
         element = WebDriverWait(self.driver, 10).until(expected_conditions.presence_of_element_located(locator))
         return element.text
 
-
+    def find_all_elements(self, locator):
+        WebDriverWait(self.driver, 30).until(expected_conditions.presence_of_element_located(locator))
+        elements = self.driver.find_elements(*locator)
+        return elements
