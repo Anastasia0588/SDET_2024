@@ -23,10 +23,19 @@ class RegistrationPageLocators:
     SUBJECTS = By.ID, 'subjectsInput'
     # поле Current Address
     CURRENT_ADDRESS = By.ID, 'currentAddress'
-    # список Select State
+    # поле Select State
     SELECT_STATE = By.ID, 'state'
     # список штатов
     STATE = By.ID, 'react-select-3-option-{}'
+    # выбранный штат
+    SELECTED_STATE = By.XPATH, './/div[@id="state"]/div/div/div'
+    # поле Select City
+    SELECT_CITY = By.ID, 'city'
+    # список городов
+    CITIES = By.XPATH, './/div[starts-with(@id, "react-select-4-option-")]'
+    CITY = By.ID, 'react-select-4-option-{}'
+    # выбранный город
+    SELECTED_CITY = By.XPATH, './/div[@id="city"]/div/div/div'
     # поле загрузки файла
     INPUT_FILE = By.ID, 'uploadPicture'
     # кнопка Submit
