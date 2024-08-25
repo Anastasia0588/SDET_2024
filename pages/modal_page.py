@@ -8,11 +8,11 @@ class ModalPage(BasePage):
         return title
 
     def get_all_data_from_modal(self):
-        table = {}
+        data_from_modal = {}
         label = value = ''
         rows = self.find_all_elements(ModalPageLocator.MODAL_TABLE_BODY)
-        for i in range(1, len(rows)+1):
-            for j in range(1,3):
+        for i in range(1, len(rows) + 1):
+            for j in range(1, 3):
                 method, one_cell_locator = ModalPageLocator.CELL
                 one_cell_locator = one_cell_locator.format(i, j)
                 locator = (method, one_cell_locator)
@@ -21,14 +21,18 @@ class ModalPage(BasePage):
                     label = cell.text
                 else:
                     value = cell.text
-                table[label] = value
-        print(type(table))
-        print(table)
-        return table
+                data_from_modal[label] = value
+        return data_from_modal
 
     def check_data_from_modal(self, user):
-        self.get_all_data_from_modal()
+        result = self.get_all_data_from_modal()
+        print(result)
         assert self.get_modal_title() == 'Thanks for submitting the form'
-
-
+        assert user['first_name'] in result['Student Name'], f'ОР: Имя - {user['first_name']},ФР: {result['Student Name']}'
+        assert user['last_name'] in result['Student Name'], f'ОР: Фамилия - {user['last_name']},ФР: {result['Student Name']}'
+        assert user['email'] == result['Student Email'], f'ОР: {user['email']},ФР: {result['Student Email']}'
+        assert str(user['mobile']) == result['Mobile'], f'ОР: {user['mobile']},ФР: {result['Mobile']}'
+        assert user['address'] == result['Address'], f'ОР: {user['address']},ФР: {result['Address']}'
+        assert user['state'] in result['State and City'], f'ОР: State - {user['state']},ФР: {result['State and City']}'
+        assert user['city'] in result['State and City'], f'ОР: City - {user['city']},ФР: {result['State and City']}'
 
