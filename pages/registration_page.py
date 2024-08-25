@@ -62,14 +62,15 @@ class RegistrationPage(BasePage):
         self.click_on_element(RegistrationPageLocators.SUBMIT_BTN)
 
     @allure.step('Выбираем любой штат из выпадающего списка Select State')
-    def select_any_state(self):
+    def select_any_state(self, user):
         self.click_on_element(RegistrationPageLocators.SELECT_STATE)
         self.select_any_element(RegistrationPageLocators.STATE, random.randint(0, 3))
+        user["state"] = self.get_element_text(RegistrationPageLocators.SELECTED_STATE)
 
-
-
-
-
-
-
+    @allure.step('Выбираем любой город из выпадающего списка Select City')
+    def select_any_city(self, user):
+        self.click_on_element(RegistrationPageLocators.SELECT_CITY)
+        cities_list = self.find_all_elements(RegistrationPageLocators.CITIES)
+        self.select_any_element(RegistrationPageLocators.CITY, random.randint(0, len(cities_list)))
+        user["city"] = self.get_element_text(RegistrationPageLocators.SELECTED_CITY)
 
