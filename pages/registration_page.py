@@ -2,9 +2,10 @@ import random
 
 import allure
 
-from helper import random_year_of_birth, generate_random_string
+from helper import random_year_of_birth, locator_with_param
 from locators.registration_locators import RegistrationPageLocators
 from pages.base_page import BasePage
+from testdata.testdata import subject_list
 
 
 class RegistrationPage(BasePage):
@@ -28,8 +29,9 @@ class RegistrationPage(BasePage):
         self.fill_text_field(RegistrationPageLocators.MOBILE, mobile)
 
     @allure.step('Выбираем любой Gender')
-    def select_any_gender(self):
-        self.select_any_element(RegistrationPageLocators.GENDERS, random.randint(1, 3))
+    def select_any_gender(self, user):
+        selected_gender = self.select_any_element(RegistrationPageLocators.GENDERS, random.randint(1, 3))
+        user['gender'] = selected_gender.text
 
     @allure.step('Выбираем дату из календаря')
     def select_birth_date(self):
@@ -38,14 +40,16 @@ class RegistrationPage(BasePage):
         self.select_year(RegistrationPageLocators.YEAR)
 
     def select_year(self, locator):
-        method, year_locator = locator
-        year_locator = year_locator.format(random_year_of_birth())
-        locator = (method, year_locator)
-        self.scroll_to_element(locator)
+        year_locator = locator_with_param(locator, random_year_of_birth())
+        self.scroll_to_element(year_locator)
 
     @allure.step('Заполняем поле Subject')
-    def fill_subject_field(self):
-        self.fill_text_field(RegistrationPageLocators.SUBJECTS, generate_random_string(50))
+    def fill_subject_field(self, user):
+        subject = random.choice(subject_list)
+        self.fill_text_field(RegistrationPageLocators.SUBJECTS, subject)
+        subject_locator = locator_with_param(RegistrationPageLocators.SUBJECT_FROM_LIST, subject)
+        self.click_on_element(subject_locator)
+        user['subjects'] = subject
 
     @allure.step('Заполняем поле Current Address')
     def fill_current_address_field(self, address):
