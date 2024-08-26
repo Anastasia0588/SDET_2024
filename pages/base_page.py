@@ -5,6 +5,8 @@ from selenium.webdriver import ActionChains
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 
+from helper import locator_with_param
+
 
 class BasePage:
     def __init__(self, driver):
@@ -14,7 +16,7 @@ class BasePage:
         WebDriverWait(self.driver, 60).until(expected_conditions.visibility_of_element_located(locator))
 
     def find_element_with_wait(self, locator):
-        WebDriverWait(self.driver, 10).until(expected_conditions.visibility_of_element_located(locator))
+        WebDriverWait(self.driver, 30).until(expected_conditions.visibility_of_element_located(locator))
         return self.driver.find_element(*locator)
 
     def fill_text_field(self, locator, text):
@@ -36,11 +38,10 @@ class BasePage:
         self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
 
     def select_any_element(self, locator, num):
-        method, one_element_locator = locator
-        one_element_locator = one_element_locator.format(num)
-        locator = (method, one_element_locator)
-        element = self.find_element_with_wait(locator)
+        one_element_locator = locator_with_param(locator, num)
+        element = self.find_element_with_wait(one_element_locator)
         element.click()
+        return element
 
     def upload_file(self, element, file):
         current_dir = os.path.abspath(os.path.dirname(__file__))
