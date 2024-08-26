@@ -15,3 +15,11 @@ def generate_mobile_number():
 def random_year_of_birth():
     return random.randint(1900, 2024)
 
+
+def locator_with_param(locator, variable):
+    method, locator = locator
+    locator = locator.format(variable)
+    locator_param = (method, locator)
+    return locator_param
+
+
