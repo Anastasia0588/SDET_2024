@@ -1,0 +1,1 @@
+subject_list = ['Maths', 'Chemistry', 'Physics', 'Arts', 'Accounting', 'English', 'Commerce', 'Hindi']
