@@ -13,7 +13,7 @@ class RegistrationPageLocators:
     # поле Mobile
     MOBILE = By.ID, 'userNumber'
     # радиобаттон Gender
-    GENDERS = By.XPATH, './/input[@id="gender-radio-{}"]/following-sibling::label' # gender-radio-{}
+    GENDERS = By.XPATH, './/input[@id="gender-radio-{}"]/following-sibling::label'
     # поле Date of Birth
     DATE_FIELD = By.ID, 'dateOfBirthInput'
     # календарь
@@ -21,6 +21,9 @@ class RegistrationPageLocators:
     YEAR = By.XPATH, '//div[@id="dateOfBirth"]//options[@value="{}"]'
     # поле Subjects
     SUBJECTS = By.ID, 'subjectsInput'
+    # выбранные subject
+    SUBJECT_FROM_LIST = By.XPATH, './/div[(text()="{}") and starts-with(@id, "react-select-2-option")]'
+    SELECTED_SUBJECT = By.XPATH, './/div[(text()="{}"'
     # поле Current Address
     CURRENT_ADDRESS = By.ID, 'currentAddress'
     # поле Select State
